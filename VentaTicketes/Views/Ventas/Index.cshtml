@@ -1,0 +1,95 @@
+﻿@model VentaTicketes.Models.TickersSale
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+
+
+<div class="row">
+    @using (Html.BeginForm("ComprarBoleto", "Ventas", FormMethod.Post, new
+    {
+        @class = "form-group"
+    }))
+    {
+        <div class="form-group">
+            @Html.DropDownListFor(m => m.idRuta, ViewBag.Rutas as List<SelectListItem>,
+                     " -- Seleccionar Regiones --", new
+                     {
+                         @class = "form-control",
+                         id = "Rutas"
+                     })
+            <br />
+            @Html.DropDownListFor(m => m.idLugarRuta, new List<SelectListItem>(),
+                     " -- Seleccionar Territorios --", new
+                     {
+                         @class = "form-control",
+                         id = "Lugares"
+                     })
+            <br />
+            @Html.DropDownListFor(m => m.idHorario, new List<SelectListItem>(),
+                     " -- Seleccionar Territorios --", new
+                     {
+                         @class = "form-control",
+                         id = "Horario"
+                     })
+            <br />
+            @Html.LabelFor(m => m.campo)
+            @Html.EditorFor(m => m.campo)
+            <br />
+            @Html.LabelFor(m => m.fecha)
+            @Html.TextBoxFor(m => m.fecha, "{0:MM/dd/yyyy}", new { type = "date" })
+            <section class="">
+                <input type="submit" class="btn btn-block btn-primary" name="nam" value="Comprar boletos">
+            </section>
+        </div>
+    }
+</div>
+
+
+
+@section scripts {
+    <script type="text/javascript">
+
+    $(document).ready(function () {
+        $("#Rutas").change(function () {
+            $("#Lugares").empty();
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("ArticulosPorCategoria")',
+                dataType: 'json',
+                data: { id: $("#Rutas").val() },
+                success: function (lugar) {
+                    $.each(lugar, function (i, lugar) {
+                        $("#Lugares").append('<option value="' + lugar.Value + '">' +
+                            lugar.Text + '</option>');
+
+                    });
+                },
+            })
+        });
+    });
+
+    $(document).ready(function () {
+        $("#Lugares").change(function () {
+            $("#Horario").empty();
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("Horarios")',
+                dataType: 'json',
+                data: { id: $("#Lugares").val() },
+                success: function (horario) {
+                    $.each(horario, function (i, horario) {
+                        $("#Horario").append('<option value="' + horario.Value + '">' +
+                            horario.Text + '</option>');
+
+                    });
+                },
+            })
+        });
+    });
+    </script>
+
+
+}
