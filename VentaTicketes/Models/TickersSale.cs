@@ -11,14 +11,26 @@ namespace VentaTicketes.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel;
+    using System.ComponentModel.DataAnnotations;
+
     public partial class TickersSale
     {
+        [DisplayName("Ruta")]
+        [Required]
         public int idRuta { get; set; }
+        [DisplayName("Lugar")]
+        [Required]
         public int idLugarRuta { get; set; }
+        [DisplayName("Horario")]
+        [Required]
         public int idHorario { get; set; }
+        [DisplayName("Asientos")]
+        [Required]
         public int campo { get; set; }
         public int idTiquete { get; set; }
+        [DisplayName("Fecha de compra")]
+        [Required]
         public Nullable<System.DateTime> fecha { get; set; }
     
         public virtual TicketsHorarios TicketsHorarios { get; set; }

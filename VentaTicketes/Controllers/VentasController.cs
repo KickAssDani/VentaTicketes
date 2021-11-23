@@ -60,7 +60,7 @@ namespace VentaTicketes.Controllers
                     {
                         _seller.TickersSale.Add(_sales);
                         _seller.SaveChanges();
-                        TempData["Mensaje"] = "Se agregó correctamente el dato.";
+                        TempData["Mensaje"] = "Se realizó la compra con éxito.";
                         campos = campos + _sales.campo;
                         return RedirectToAction("Index");
                     }

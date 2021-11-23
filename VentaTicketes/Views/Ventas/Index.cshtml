@@ -1,51 +1,72 @@
 ﻿@model VentaTicketes.Models.TickersSale
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Venta";
 }
 
-<h2>Index</h2>
+<h2>Comprar Boletos</h2>
+@if (TempData["Mensaje"] != null)
+{
+    <section class="alert alert-warning alert-dismissible fade show" role="alert">
+        @TempData["Mensaje"]
+        <button type="button" class="close" date-dismiss="alert" arial-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </section>
+}
 
+<section class="container">
+    <article class="row">
+        <article class="col-md-4 offset-md-4">
+            <section class="card col-md-12">
+                <section class="offset-md-1">
+                    @using (Html.BeginForm("ComprarBoleto", "Ventas", FormMethod.Post, new
+                    {
+                        @class = "form-group"
+                    }))
+                    {
+                        <br />
+                        @Html.LabelFor(m => m.idRuta)
+                        @Html.DropDownListFor(m => m.idRuta, ViewBag.Rutas as List<SelectListItem>,
+                                 " -- Seleccionar Ruta --", new
+                                 {
+                                     @class = "form-control",
+                                     id = "Rutas"
+                                 })
+                        <br />
+                        @Html.LabelFor(m => m.idLugarRuta)
+                        @Html.DropDownListFor(m => m.idLugarRuta, new List<SelectListItem>(),
+                                 " -- Seleccionar Lugar --", new
+                                 {
+                                     @class = "form-control",
+                                     id = "Lugares"
+                                 })
+                        <br />
+                        @Html.LabelFor(m => m.idHorario)
+                        @Html.DropDownListFor(m => m.idHorario, new List<SelectListItem>(),
+                                 " -- Seleccionar Horario --", new
+                                 {
+                                     @class = "form-control",
+                                     id = "Horario"
+                                 })
+                        <br />
+                        @Html.LabelFor(m => m.campo)
+                        @Html.EditorFor(m => m.campo, new { htmlAttributes = new { @class = "form-control" } })
+                        <br />
+                        @Html.LabelFor(m => m.fecha)
+                        @Html.TextBoxFor(m => m.fecha, "{0:MM/dd/yyyy}", new { type = "date", @class = "form-control" })
+                        <br />
+                        <section class="">
+                            <input type="submit" class="btn btn-block btn-primary" name="nam" value="Comprar boletos">
+                        </section>
+                    }
 
-
-<div class="row">
-    @using (Html.BeginForm("ComprarBoleto", "Ventas", FormMethod.Post, new
-    {
-        @class = "form-group"
-    }))
-    {
-        <div class="form-group">
-            @Html.DropDownListFor(m => m.idRuta, ViewBag.Rutas as List<SelectListItem>,
-                     " -- Seleccionar Regiones --", new
-                     {
-                         @class = "form-control",
-                         id = "Rutas"
-                     })
-            <br />
-            @Html.DropDownListFor(m => m.idLugarRuta, new List<SelectListItem>(),
-                     " -- Seleccionar Territorios --", new
-                     {
-                         @class = "form-control",
-                         id = "Lugares"
-                     })
-            <br />
-            @Html.DropDownListFor(m => m.idHorario, new List<SelectListItem>(),
-                     " -- Seleccionar Territorios --", new
-                     {
-                         @class = "form-control",
-                         id = "Horario"
-                     })
-            <br />
-            @Html.LabelFor(m => m.campo)
-            @Html.EditorFor(m => m.campo)
-            <br />
-            @Html.LabelFor(m => m.fecha)
-            @Html.TextBoxFor(m => m.fecha, "{0:MM/dd/yyyy}", new { type = "date" })
-            <section class="">
-                <input type="submit" class="btn btn-block btn-primary" name="nam" value="Comprar boletos">
+                </section>
             </section>
-        </div>
-    }
-</div>
+        </article>
+    </article>
+</section>
+
+
 
 
 
